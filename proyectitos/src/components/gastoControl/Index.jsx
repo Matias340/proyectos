@@ -60,7 +60,7 @@ const textoGasto = (event) => {
   
   }
 
-  const borrar = () => {
+  const limpiar = () => {
     setIngreso(0);
     setGasto(0);
     setNuevoIngreso('');
@@ -73,13 +73,21 @@ const textoGasto = (event) => {
     setHistorialGastos([]);
   }
 
-  const borrarHistorial = () => {
-    setHistorialIngresos([]);
-  }
+  const borrarHistorialIngreso = (index) => {
+    setHistorialIngresos((prevHistorialIngresos) => {
+      const nuevoHistorial = [...prevHistorialIngresos];
+      nuevoHistorial.splice(index, 1);
+      return nuevoHistorial;
+    });
+  };
 
-  const borrarHistorial2 = () => {
-    setHistorialGastos([]);
-  }
+  const borrarHistorialGasto = (index) => {
+    setHistorialGastos((prevHistorialGastos) => {
+      const nuevoHistorial = [...prevHistorialGastos];
+      nuevoHistorial.splice(index, 1);
+      return nuevoHistorial;
+    });
+  };
 
   const total = ingreso - gasto;
 
@@ -110,28 +118,34 @@ const textoGasto = (event) => {
             <button onClick={agregarGasto}>Aceptar</button>
          </div>
          <div>
-            <button onClick={borrar}>Limpiar</button>
+            <button onClick={limpiar}>Limpiar</button>
          </div>
          <div>
             <h3>Historial</h3>
-             <li>
+             <li className='lista'>
               <p>Ingresos:</p>
-              <ul>
+              
               {historialIngresos.map((ingreso, index) => (
-                <p key={index}>{`${ingreso.titulo} : ${ingreso.monto}`}</p>
+                <ul key={index}>
+                <p>{`${ingreso.titulo} : ${ingreso.monto}`}</p>
+                <button onClick={()=> borrarHistorialIngreso(index)}>borrar</button>
+                </ul>
               ))}
-              <button onClick={borrarHistorial}>borrar</button>
-              </ul>
+              
+              
              </li>  
-             <li>
+             <li className='lista'>
               <p>Gastos:</p>
-              <ul>
+              
               {historialGastos.map((gasto, index) => (
-                <p key={index}>{`${gasto.titulo} : ${gasto.monto}`}</p>
+                <ul key={index}>
+                <p>{`${gasto.titulo} : ${gasto.monto}`}</p>
+                <button onClick={()=> borrarHistorialGasto(index)}>Borrar</button>
+              </ul>
                 
               ))}
-              <button onClick={borrarHistorial2}>borrar</button>
-              </ul>
+             
+              
              </li>
          </div>
        </div>
